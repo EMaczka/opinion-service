@@ -2,6 +2,7 @@ package com.yourpinion.feature;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
@@ -10,8 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Getter
+@Setter
 @ToString
-@AllArgsConstructor
 @Entity
 public class Feature {
 

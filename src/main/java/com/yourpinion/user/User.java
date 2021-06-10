@@ -2,11 +2,13 @@ package com.yourpinion.user;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 
 @Getter
+@Setter
 @ToString
 @Builder
 @Entity
