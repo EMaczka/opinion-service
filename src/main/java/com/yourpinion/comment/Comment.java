@@ -1,6 +1,5 @@
 package com.yourpinion.comment;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,7 +11,6 @@ import javax.persistence.Entity;
 @ToString
 @Getter
 @Setter
-@Builder
 @Entity
 public class Comment {
 

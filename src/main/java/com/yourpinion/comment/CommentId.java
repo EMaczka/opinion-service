@@ -2,7 +2,6 @@ package com.yourpinion.comment;
 
 import com.yourpinion.feature.Feature;
 import com.yourpinion.user.User;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,7 +13,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-@Builder
 @Embeddable
 public class CommentId implements Serializable {
 
