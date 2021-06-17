@@ -1,4 +1,4 @@
-package com.yourpinion.web;
+package com.yourpinion.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

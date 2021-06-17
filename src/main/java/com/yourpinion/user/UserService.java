@@ -1,5 +1,6 @@
 package com.yourpinion.user;
 
+import com.yourpinion.security.CustomSecurityUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,7 +17,7 @@ public class UserService implements UserDetailsService {
 
         if (user == null)
             throw new UsernameNotFoundException("Invalid username and/or password");
-        return null;
+        return new CustomSecurityUser(user);
     }
 
 }
