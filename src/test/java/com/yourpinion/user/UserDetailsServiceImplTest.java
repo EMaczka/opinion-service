@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserServiceTest {
+class UserDetailsServiceImplTest {
 
     @Test
     public void shouldGenerateEncryptedPassword() {

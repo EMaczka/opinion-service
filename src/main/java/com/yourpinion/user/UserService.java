@@ -1,25 +1,32 @@
 package com.yourpinion.user;
 
-import com.yourpinion.security.CustomSecurityUser;
+import com.yourpinion.security.Authority;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Access;
+
 @Service
-public class UserService implements UserDetailsService {
+public class UserService {
 
     @Autowired
     private UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-        if (user == null)
-            throw new UsernameNotFoundException("Invalid username and/or password");
-        return new CustomSecurityUser(user);
+    public User save(User user) {
+
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+
+        Authority authority = new Authority();
+        authority.setAuthority("ROLE_USER");
+        authority.setUser(user);
+
+        user.getAuthorities().add(authority);
+
+        return userRepository.save(user);
     }
-
 }
