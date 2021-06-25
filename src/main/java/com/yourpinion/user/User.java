@@ -1,5 +1,6 @@
 package com.yourpinion.user;
 
+import com.yourpinion.product.Product;
 import com.yourpinion.security.Authority;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,8 @@ public class User {
     private String name;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     private Set<Authority> authorities = new HashSet<>();
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Product> products = new HashSet<>();
 
 }
 

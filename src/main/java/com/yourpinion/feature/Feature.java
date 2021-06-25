@@ -1,13 +1,11 @@
 package com.yourpinion.feature;
 
+import com.yourpinion.product.Product;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -20,4 +18,6 @@ public class Feature {
     private String title;
     private String description;
     private Status status;
+    @ManyToOne
+    private Product product;
 }
