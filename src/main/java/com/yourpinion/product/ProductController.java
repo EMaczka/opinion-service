@@ -7,7 +7,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -35,7 +34,6 @@ public class ProductController {
             response.sendError(HttpStatus.NOT_FOUND.value(), "Product with id " + productId + " not found");
             return "product";
         }
-
         return "product";
     }
 
@@ -52,8 +50,10 @@ public class ProductController {
     }
 
     @PostMapping("/products/{productId}")
-    public String save(@PathVariable Long productId, Product product) {
+    public String saveProduct(@PathVariable Long productId, Product product) {
         System.out.println(product);
+
+        product = productRepository.save(product);
 
         return "redirect:/products/" + product.getId();
     }
