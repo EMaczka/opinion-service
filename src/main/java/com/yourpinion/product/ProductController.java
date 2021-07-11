@@ -21,15 +21,6 @@ public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
-    @GetMapping("/products")
-    public String getProducts(@AuthenticationPrincipal User user, ModelMap model) {
-        List<Product> products = productRepository.findByUser(user);
-
-        model.put("products", products);
-
-        return "products";
-    }
-
     @GetMapping("/products/{productId}")
     public String getProduct(@PathVariable Long productId, HttpServletResponse response, ModelMap modelMap) throws IOException {
         Optional<Product> productOptional = productRepository.findById(productId);
