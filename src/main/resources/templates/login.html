@@ -2,7 +2,7 @@
 <html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
     <script th:replace="fragments/header :: headerElement"></script>
-    <title>Yourpinion - Login</title>
+    <title>Yourpinion - Log in</title>
     <script type="text/javascript">
         $(function () {
           $("#register").click(function () {
@@ -15,7 +15,7 @@
 <div th:replace="fragments/header :: header"></div>
     <div class="container">
         <div class="card" style="margin-top: 1.5em;">
-            <div class="card-header"><h3>Please Login</h3></div>
+            <div class="card-header"><h3>Please log in</h3></div>
             <div class="card-body">
                 <form action="" method="post">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
