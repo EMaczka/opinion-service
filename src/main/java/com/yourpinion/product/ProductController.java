@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @Controller
@@ -32,6 +35,22 @@ public class ProductController {
             return "product";
         }
         return "product";
+    }
+
+    @GetMapping("/p/{productName}")
+    public String productUserView(@PathVariable String productName, ModelMap modelMap) {
+        if (productName != null) {
+            try {
+                String decodedProductName = URLDecoder.decode(productName, StandardCharsets.UTF_8.name());
+                Optional<Product> productOpt = productRepository.findByName(decodedProductName);
+                if (productOpt.isPresent()) {
+                    modelMap.put("product", productOpt.get());
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        return "productUserView";
     }
 
     @PostMapping("/products")
