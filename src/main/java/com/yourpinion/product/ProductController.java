@@ -1,6 +1,8 @@
 package com.yourpinion.product;
 
 import com.yourpinion.user.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,6 +21,7 @@ import java.util.Optional;
 
 @Controller
 public class ProductController {
+    private Logger log = LoggerFactory.getLogger(ProductController.class);
 
     @Autowired
     private ProductRepository productRepository;
@@ -47,7 +50,7 @@ public class ProductController {
                     modelMap.put("product", productOpt.get());
                 }
             } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+                log.error("Problem with a product URL decoding", e);
             }
         }
         return "productUserView";
