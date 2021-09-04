@@ -25,4 +25,11 @@ public class FeatureController {
     public String getFeature(@PathVariable Long productId, @PathVariable Long featureId) {
         return "feature";
     }
+
+    @PostMapping("{featureId}")
+    public String updateFeature(Feature feature, @PathVariable Long productId, @PathVariable Long featureId) {
+        feature = featureService.save(feature);
+
+        return "redirect:/products/" + productId + "/features" + feature.getId();
+    }
 }
