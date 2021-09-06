@@ -17,10 +17,10 @@ public class FeatureService {
     public Feature createFeature(Long productId) {
         Feature feature = new Feature();
 
-        Optional<Product> productOptional = productRepository.findById(productId);
+        Optional<Product> productOpt = productRepository.findById(productId);
 
-        if (productOptional.isPresent()) {
-            Product product = productOptional.get();
+        if (productOpt.isPresent()) {
+            Product product = productOpt.get();
 
             feature.setProduct(product);
             product.getFeatures().add(feature);
