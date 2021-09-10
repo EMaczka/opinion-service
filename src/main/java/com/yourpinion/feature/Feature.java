@@ -9,7 +9,6 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@ToString
 @Entity
 public class Feature {
 
