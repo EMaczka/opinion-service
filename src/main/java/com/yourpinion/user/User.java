@@ -1,5 +1,6 @@
 package com.yourpinion.user;
 
+import com.yourpinion.feature.Feature;
 import com.yourpinion.product.Product;
 import com.yourpinion.security.Authority;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class User {
     private Set<Authority> authorities = new HashSet<>();
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Product> products = new HashSet<>();
-
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Feature> features = new HashSet<>();
 }
 

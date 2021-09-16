@@ -1,9 +1,9 @@
 package com.yourpinion.feature;
 
 import com.yourpinion.product.Product;
+import com.yourpinion.user.User;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -19,4 +19,6 @@ public class Feature {
     private Status status;
     @ManyToOne
     private Product product;
+    @ManyToOne
+    private User user;
 }
