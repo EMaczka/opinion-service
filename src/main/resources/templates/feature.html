@@ -23,13 +23,13 @@
                 <input type="hidden" th:field="${feature.status}"/>
                 <div class="form-group">
                     <label for="title">Feature name:</label>
-                    <input type="text" class="form-control" rows="3" th:field="${feature.title}"/>
+                    <input type="text" class="form-control" rows="3" th:field="${feature.title}" th:attrappend="disabled=${user.id == feature.user.id ? null : 'disabled'}"/>
                 </div>
                 <div>
                     <label for="description">Description:</label>
-                    <textarea class="form-control" th:field="${feature.description}"></textarea>
+                    <textarea class="form-control" th:field="${feature.description}" th:attrappend="disabled=${user.id == feature.user.id ? null : 'disabled'}"></textarea>
                 </div>
-                <div style="margin-top: 1em">
+                <div style="margin-top: 1em" th:if="${user.id == feature.user.id}">
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
