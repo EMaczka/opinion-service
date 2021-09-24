@@ -4,9 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @ToString
 @Getter
@@ -14,8 +12,8 @@ import javax.persistence.Entity;
 @Entity
 public class Comment {
 
-    @EmbeddedId
-    private CommentId pk;
+    @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(length = 1250)
     private String text;
 }
