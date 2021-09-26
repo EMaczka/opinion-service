@@ -1,5 +1,7 @@
 package com.yourpinion.feature;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.yourpinion.comment.Comment;
 import com.yourpinion.product.Product;
 import com.yourpinion.user.User;
@@ -13,6 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class Feature {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

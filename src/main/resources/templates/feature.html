@@ -36,8 +36,23 @@
 
             <div style="margin-top: 2em">
                 <h3>Comments</h3>
+                <form action="">
+                    <div class="form-group" style="margin-top: 0.5em">
+                        <label for="commentTextarea">Leave your comment below</label>
+                        <textarea class="form-control" id="commentTextarea" rows="3"></textarea>
+                    </div>
+                </form>
                 <div th:each="comment : ${comments}">
                     <span th:text="${comment.text}"></span>
+                    <div th:each="commentLevel1 : ${comment.comments}" style="margin-left: 1em;">
+                        <span th:text="${commentLevel1.text}"></span>
+                        <div th:each="commentLevel2 : ${commentLevel1.comments}" style="margin-left: 1em;">
+                            <span th:text="${commentLevel2.text}"></span>
+                            <div th:each="commentLevel3 : ${commentLevel2.comments}" style="margin-left: 1em;">
+                                <span th:text="${commentLevel3.text}"></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
