@@ -1,5 +1,6 @@
 package com.yourpinion.feature;
 
+import com.yourpinion.comment.Comment;
 import com.yourpinion.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/products/{productId}/features")
@@ -37,11 +38,30 @@ public class FeatureController {
         if (featureOpt.isPresent()) {
             Feature feature = featureOpt.get();
             modelMap.put("feature", feature);
-            modelMap.put("comments", feature.getComments());
+            SortedSet<Comment> commentsWithoutDuplicates = getCommentsWithoutDuplicates(0, new HashSet<Long>(), feature.getComments());
+            modelMap.put("comments", commentsWithoutDuplicates);
         }
         modelMap.put("user", user);
 
         return "feature";
+    }
+
+    private SortedSet<Comment> getCommentsWithoutDuplicates(int page, Set<Long> visitedComments, SortedSet<Comment> comments) {
+        page++;
+        Iterator<Comment> iterator = comments.iterator();
+        while (iterator.hasNext()) {
+            Comment comment = iterator.next();
+            boolean addedToVisitedComments = visitedComments.add(comment.getId());
+            if (!addedToVisitedComments) {
+                iterator.remove();
+                if (page != 1)
+                    return comments;
+            }
+            if (addedToVisitedComments && !comment.getComments().isEmpty())
+                getCommentsWithoutDuplicates(page, visitedComments, comment.getComments());
+        }
+
+        return comments;
     }
 
     @PostMapping("{featureId}")

@@ -9,8 +9,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @Getter
 @Setter
@@ -28,5 +28,6 @@ public class Feature {
     @ManyToOne
     private User user;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "feature")
-    private Set<Comment> comments = new HashSet<>();
+    @OrderBy("createdDate, id")
+    private SortedSet<Comment> comments = new TreeSet<>();
 }
