@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Controller
@@ -40,7 +41,7 @@ public class FeatureController {
             modelMap.put("feature", feature);
             SortedSet<Comment> commentsWithoutDuplicates = getCommentsWithoutDuplicates(0, new HashSet<Long>(), feature.getComments());
             modelMap.put("thread", commentsWithoutDuplicates);
-            modelMap.put("comment", new Comment());
+            modelMap.put("rootComment", new Comment());
         }
         modelMap.put("user", user);
 
@@ -70,12 +71,7 @@ public class FeatureController {
         feature.setUser(user);
         feature = featureService.save(feature);
         String encodedProductName;
-        try {
-            encodedProductName = URLEncoder.encode(feature.getProduct().getName(), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            log.warn("Unable to encode the URL string: " + feature.getProduct().getName() + ", redirecting to dashboard");
-            return "redirect:/dashboard";
-        }
+        encodedProductName = URLEncoder.encode(feature.getProduct().getName(), StandardCharsets.UTF_8);
 
         return "redirect:/p/" + encodedProductName;
     }

@@ -7,13 +7,10 @@ import com.yourpinion.feature.Feature;
 import com.yourpinion.user.User;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.util.*;
 
-@ToString
 @Getter
 @Setter
 @Entity
@@ -56,11 +53,8 @@ public class Comment implements Comparable<Comment> {
             return false;
         Comment other = (Comment) obj;
         if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
+            return other.id == null;
+        } else return id.equals(other.id);
     }
     @Override
     public String toString() {

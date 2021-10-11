@@ -6,6 +6,7 @@ import com.yourpinion.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -31,16 +32,29 @@ public class CommentController {
 
     @PostMapping("")
     public String postComment(@AuthenticationPrincipal User user, @PathVariable Long productId,
-                              @PathVariable Long featureId, Comment comment) {
-        Optional<Feature> featureOpt = featureRepository.findById(featureId);
+                              @PathVariable Long featureId, Comment rootComment, @RequestParam(required=false) Long parentId,
+                              @RequestParam(required=false) String childCommentText) {
+        var featureOpt = featureRepository.findById(featureId);
 
-        if (featureOpt.isPresent())
-            comment.setFeature(featureOpt.get());
-        comment.setUser(user);
-        comment.setCreatedDate(new Date());
-
-        commentRepository.save(comment);
+        if (!StringUtils.isEmpty(rootComment.getText())) {
+            populateCommentMetadata(user, featureOpt, rootComment);
+            commentRepository.save(rootComment);
+        }
+        else if (parentId != null) {
+            Comment comment = new Comment();
+            Optional<Comment> parentCommentOpt = commentRepository.findById(parentId);
+            parentCommentOpt.ifPresent(comment::setComment);
+            comment.setText(childCommentText);
+            populateCommentMetadata(user, featureOpt, comment);
+            commentRepository.save(comment);
+        }
 
         return "redirect:/products/" + productId + "/features/" + featureId;
+    }
+
+    private void populateCommentMetadata(User user, Optional<Feature> featureOpt, Comment comment) {
+        featureOpt.ifPresent(comment::setFeature);
+        comment.setUser(user);
+        comment.setCreatedDate(new Date());
     }
 }

@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Controller
 public class ProductController {
-    private Logger log = LoggerFactory.getLogger(ProductController.class);
+    private final Logger log = LoggerFactory.getLogger(ProductController.class);
 
     @Autowired
     private ProductRepository productRepository;
@@ -46,9 +46,7 @@ public class ProductController {
             try {
                 String decodedProductName = URLDecoder.decode(productName, StandardCharsets.UTF_8.name());
                 Optional<Product> productOpt = productRepository.findByName(decodedProductName);
-                if (productOpt.isPresent()) {
-                    modelMap.put("product", productOpt.get());
-                }
+                productOpt.ifPresent(product -> modelMap.put("product", product));
             } catch (UnsupportedEncodingException e) {
                 log.error("Problem with a product URL decoding", e);
             }
