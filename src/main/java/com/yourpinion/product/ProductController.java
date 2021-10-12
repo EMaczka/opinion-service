@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,10 +69,8 @@ public class ProductController {
 
     @PostMapping("/products/{productId}")
     public String saveProduct(@PathVariable Long productId, Product product) {
-        System.out.println(product);
-
         product = productRepository.save(product);
 
-        return "redirect:/products/" + product.getId();
+        return "redirect:/dashboard";
     }
 }
